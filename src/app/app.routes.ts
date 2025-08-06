@@ -10,4 +10,10 @@ export const routes: Routes = [
     redirectTo: 'auth/login',
     pathMatch: 'full'
   },
+  {
+  path: 'products',
+  loadChildren: () =>
+    import('./products/products.module').then(m => m.ProductsModule)
+  },
+
 ];
