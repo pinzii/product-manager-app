@@ -10,25 +10,36 @@ import { Product } from '../models/product.model';
 @Injectable()
 export class ProductEffects {
   load$;
-  
+  createProduct$;
+
   constructor(
     private actions$: Actions,
     private productService: ProductService
-
   ) {
     this.load$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ProductActions.loadProducts),
         mergeMap(() =>
-         this.productService.getAll().pipe(
-
-          map((products: Product[]) =>
-             ProductActions.loadSuccess({ products })
-           ),
+          this.productService.getAll().pipe(
+            map(products => ProductActions.loadSuccess({ products })),
             catchError(error => of(ProductActions.loadFailure({ error })))
+          )
+        )
+      )
+    );
+
+    this.createProduct$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(ProductActions.createProduct),
+        mergeMap(({ product }) =>
+          this.productService.create(product).pipe(
+            map(created => ProductActions.createProductSuccess({ product: created })),
+            catchError(error => of(ProductActions.createProductFailure({ error })))
           )
         )
       )
     );
   }
 }
+
+

@@ -1,6 +1,2 @@
-<h2>Catálogo de Productos</h2>
-<ul>
-  <li *ngFor="let p of products$ | async">
-    {{ p.title }}
-  </li>
-</ul>
+<app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
+

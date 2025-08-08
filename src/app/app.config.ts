@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
 
     // 4) Importar los módulos de NgRx
     importProvidersFrom(
-      StoreModule.forRoot({ products: productReducer }),
+      StoreModule.forRoot({ products: productReducer  }),
       EffectsModule.forRoot([ ProductEffects ]),
       StoreDevtoolsModule.instrument({
         maxAge: 25,

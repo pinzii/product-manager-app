@@ -5,7 +5,7 @@ import { Product } from '../../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private apiUrl = 'http://localhost:3000/products';
 
   constructor(private http: HttpClient) {}
 
