@@ -20,5 +20,17 @@
       "name": "otro ",
       "price": 44
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "password": "123456"
+    },
+    {
+      "id": 2,
+      "email": "user@example.com",
+      "password": "abc123"
+    }
   ]
 }
