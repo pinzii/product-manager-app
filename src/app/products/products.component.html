@@ -1,2 +1,11 @@
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+  <h2 style="margin:0;">Productos</h2>
+  <button mat-stroked-button color="primary" (click)="logout()">Cerrar sesión</button>
+</div>
+
 <app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
 
+<ul *ngIf="products$ | async as list; else loading">
+  <li *ngFor="let p of list">{{ p.name }} — {{ p.price | currency }}</li>
+</ul>
+<ng-template #loading>Cargando...</ng-template>

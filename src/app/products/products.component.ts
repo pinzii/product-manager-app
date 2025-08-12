@@ -5,14 +5,17 @@ import { Observable }        from 'rxjs';
 import * as ProductActions   from '../state/product.actions';
 import { Product }           from '../models/product.model';
 import { ProductFormComponent } from './components/product-form/product-form.component';
-
+import { AuthService } from 'app/auth/pages/auth.service';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-products',
   standalone: true,
   imports: [
     CommonModule,
-    ProductFormComponent
+    ProductFormComponent,
+    MatButtonModule
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
@@ -23,11 +26,12 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     // Inyectamos el Store de NgRx
-    private store: Store<{ products: { products: Product[]; error: any } }>
+    private store: Store<{ products: { products: Product[]; error: any } }>,
+    private auth: AuthService,
+    private router: Router
   ) {
     // Seleccionamos la lista de products del store
-    this.products$ = this.store.pipe(
-      select(state => state.products.products));
+    this.products$ = this.store.select(s => s.products.products);
   }
 
   ngOnInit(): void {
@@ -40,4 +44,9 @@ export class ProductsComponent implements OnInit {
   handleCreate(product: Product): void {
   this.store.dispatch(ProductActions.createProduct({ product }));
   }
+
+  logout(): void {
+  this.auth.logout();
+  this.router.navigate(['/auth/login']);
+}
 }
