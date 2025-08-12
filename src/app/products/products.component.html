@@ -6,6 +6,8 @@
 <app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
 
 <ul *ngIf="products$ | async as list; else loading">
-  <li *ngFor="let p of list">{{ p.name }} — {{ p.price | currency }}</li>
+  <li *ngFor="let p of list">{{ p.name }} — {{ p.price | currency }}
+      <button mat-button color="warn" (click)="handleDelete(p.id!)">Eliminar</button>
+  </li>
 </ul>
 <ng-template #loading>Cargando...</ng-template>

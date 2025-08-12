@@ -48,5 +48,11 @@ export class ProductsComponent implements OnInit {
   logout(): void {
   this.auth.logout();
   this.router.navigate(['/auth/login']);
-}
+  }
+
+  handleDelete(id: string | number): void {
+  const ok = confirm('¿Eliminar este producto?');
+  if (ok) this.store.dispatch(ProductActions.deleteProduct({ id }));
+  }
+
 }
