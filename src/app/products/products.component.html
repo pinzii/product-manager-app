@@ -7,6 +7,7 @@
 
 <ul *ngIf="products$ | async as list; else loading">
   <li *ngFor="let p of list">{{ p.name }} — {{ p.price | currency }}
+      <button mat-button (click)="openEdit(p)">Editar</button>
       <button mat-button color="warn" (click)="handleDelete(p.id!)">Eliminar</button>
   </li>
 </ul>

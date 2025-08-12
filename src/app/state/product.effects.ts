@@ -12,6 +12,7 @@ export class ProductEffects {
   load$;
   createProduct$;
   deleteProduct$;
+  updateProduct$;
 
   constructor(
     private actions$: Actions,
@@ -48,6 +49,18 @@ export class ProductEffects {
           this.productService.delete(id).pipe(
             map(() => ProductActions.deleteProductSuccess({ id })),
             catchError(error => of(ProductActions.deleteProductFailure({ error })))
+          )
+        )
+      )
+    );
+
+    this.updateProduct$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(ProductActions.updateProduct),
+        mergeMap(({ product }) =>
+          this.productService.update(product).pipe(
+            map(updated => ProductActions.updateProductSuccess({ product: updated })),
+            catchError(error => of(ProductActions.updateProductFailure({ error })))
           )
         )
       )
