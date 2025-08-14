@@ -2,18 +2,28 @@
   "products": [
     {
       "id": "1",
-      "name": "Producto 1",
+      "name": "Producto A",
       "price": 10000
     },
     {
-      "id": "2",
-      "name": "Producto B",
-      "price": 20000
+      "id": "eb7c",
+      "name": "nuevo prod",
+      "price": 1050
     },
     {
-      "id": "eb7c",
-      "name": "nuevo",
-      "price": 555
+      "id": "a2bc",
+      "name": "producto 3 ",
+      "price": 200000
+    },
+    {
+      "id": "63b5",
+      "name": "producto 2",
+      "price": 5000
+    },
+    {
+      "id": "03eb",
+      "name": "producto 1",
+      "price": 10100
     }
   ],
   "users": [

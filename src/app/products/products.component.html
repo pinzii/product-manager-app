@@ -1,14 +1,64 @@
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-  <h2 style="margin:0;">Productos</h2>
-  <button mat-stroked-button color="primary" (click)="logout()">Cerrar sesión</button>
+<mat-toolbar class="pm-toolbar glass">
+  <span class="pm-title">Gestión de productos</span>
+  <span class="pm-spacer"></span>
+  <button mat-stroked-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Cerrar sesión
+  </button>
+</mat-toolbar>
+
+<div class="pm-shell">
+  <div class="pm-grid">
+    <mat-card class="pm-card glass">
+      <mat-card-title>Crear producto</mat-card-title>
+      <mat-card-content>
+        <app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="pm-card glass">
+      <mat-card-title>Listado</mat-card-title>
+      <mat-card-content>
+        <table mat-table
+               *ngIf="products$ | async as list; else loading"
+               [dataSource]="list"
+               [trackBy]="trackById"
+               class="pm-table">
+          <!-- ID -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let p">{{ p.id }}</td>
+          </ng-container>
+
+          <!-- Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let p">{{ p.name }}</td>
+          </ng-container>
+
+          <!-- Precio -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let p">{{ p.price | currency }}</td>
+          </ng-container>
+
+          <!-- Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell class="pm-actions-th" *matHeaderCellDef>Acciones</th>
+            <td mat-cell class="pm-actions-td" *matCellDef="let p">
+              <button mat-icon-button (click)="openEdit(p)" aria-label="Editar"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn" (click)="handleDelete(p.id)" aria-label="Eliminar"><mat-icon>delete</mat-icon></button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <ng-template #loading>
+          <div class="pm-loading">Cargando productos…</div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
-
-<app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
-
-<ul *ngIf="products$ | async as list; else loading">
-  <li *ngFor="let p of list">{{ p.name }} — {{ p.price | currency }}
-      <button mat-button (click)="openEdit(p)">Editar</button>
-      <button mat-button color="warn" (click)="handleDelete(p.id!)">Eliminar</button>
-  </li>
-</ul>
-<ng-template #loading>Cargando...</ng-template>
