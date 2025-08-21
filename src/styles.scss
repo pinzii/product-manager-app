@@ -8,3 +8,131 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.success-snack { background: #0f9d58; color: #0f9d58; }
+.info-snack    { background: #1976d2; color: #0f9d58; }
+.warn-snack    { background: #f9a825; color: #111; }
+.error-snack   { background: #d32f2f; color: #fff; }
+
+/* ===== Panel glass y layout ===== */
+.pm-dialog-rounded .mat-mdc-dialog-surface { border-radius: 20px; }
+
+.pm-dialog-glass .mat-mdc-dialog-container .mat-mdc-dialog-surface {
+  /* más contraste para que el texto y los inputs destaquen */
+  background: rgba(22, 24, 33, 0.30);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 56px rgba(0,0,0,.45);
+  color: inherit;
+}
+
+@media (prefers-color-scheme: light) {
+  .pm-dialog-glass .mat-mdc-dialog-container .mat-mdc-dialog-surface {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: rgba(0,0,0,.08);
+    box-shadow: 0 14px 42px rgba(0,0,0,.22);
+  }
+}
+
+/* backdrop */
+.pm-dialog-glass .cdk-overlay-backdrop.cdk-overlay-dark-backdrop { background: rgba(0,0,0,.48); }
+
+/* título / id */
+.pm-title { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin:0 0 .25rem; }
+.pm-title-left { display:flex; align-items:center; gap:.5rem; }
+.pm-title-icon { opacity:1;   color: rgb(95, 3, 113);
+ }
+.pm-id-pill {
+  font-size:.78rem; padding:.25rem .6rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+}
+@media (prefers-color-scheme: light) {
+  .pm-id-pill { border-color:rgba(0,0,0,.10); background:rgba(255,255,255,.55); }
+}
+
+/* ===== Inputs: posición y densidad ===== */
+.pm-content {
+  display:grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+  padding-top: 2px;      /* acerca los campos al título */
+}
+@media (min-width: 720px) {           /* columnas balanceadas en desktop */
+  .pm-content { grid-template-columns: 1.1fr .9fr; }
+}
+.pm-actions { padding-top:10px; position:sticky; bottom:0; background:transparent; }
+.pm-suffix  { opacity:.78; font-weight:600; }
+
+/* ===== Colores de outline (hover/focus) ===== */
+.pm-dialog-glass {
+  /* paleta acento morado-azul */
+  --pm-accent: #4dffaf;
+  --pm-accent-2: #1cc2fe;
+  --pm-outline: rgba(255,255,255,.30);
+  --pm-outline-hover: rgba(255,255,255,.45);
+  --pm-label: rgba(255,255,255,.85);
+  --pm-label-focus: #d6ffe2;
+}
+
+/* borde base */
+.pm-dialog-glass .mdc-notched-outline__leading,
+.pm-dialog-glass .mdc-notched-outline__notch,
+.pm-dialog-glass .mdc-notched-outline__trailing {
+  border-color: var(--pm-outline) !important;
+}
+/* hover */
+.pm-dialog-glass .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.pm-dialog-glass .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.pm-dialog-glass .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: var(--pm-outline-hover) !important;
+}
+/* focus: borde + glow sutil */
+.pm-dialog-glass .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.pm-dialog-glass .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.pm-dialog-glass .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: color-mix(in oklab, var(--pm-accent) 65%, var(--pm-accent-2)) !important;
+}
+.pm-dialog-glass .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 1px rgba(124,77,255,.45), 0 0 20px rgba(5, 219, 80, 0.2);
+  border-radius: 12px; /* suaviza el glow */
+}
+
+/* radio & densidad */
+.pm-dialog-glass .mat-mdc-form-field { --mdc-outlined-text-field-container-shape: 12px; }
+.pm-dialog-glass .mat-mdc-form-field-infix { padding-top: 10px !important; padding-bottom: 10px !important; }
+
+/* labels e hints más legibles sobre glass */
+.pm-dialog-glass .mdc-floating-label { color: var(--pm-label); }
+.pm-dialog-glass .mat-mdc-form-field.mat-focused .mdc-floating-label { color: var(--pm-label-focus); }
+.pm-dialog-glass .mat-mdc-form-field-subscript-wrapper { opacity: 1; }
+
+/* quitar cualquier fondo heredado en el wrapper de los inputs */
+.pm-dialog-glass .mat-mdc-text-field-wrapper { background: transparent; box-shadow: none; }
+
+/* separa el $ y COP de los bordes del contorno */
+.pm-dialog-glass .mat-mdc-form-field .pm-prefix {
+  display: inline-block;
+  padding-left: 30px;   /* espacio con el borde izquierdo */
+  padding-right: 6px;   /* espacio con el input */
+  opacity: 1;
+  font-weight: 600;
+  color: rgb(95, 3, 113);
+}
+
+.pm-dialog-glass .mat-mdc-form-field .pm-suffix {
+  display: inline-block;
+  padding-left: 6px;    /* espacio con el input */
+  padding-right: 10px;  /* espacio con el borde derecho */
+  opacity: 1;
+  font-weight: 600;
+  color: rgb(95, 3, 113);
+}
+
+.pm-dialog-glass .mat-mdc-form-field-infix {
+  padding-left: 15px !important;
+  padding-right: 30px !important;
+  padding-top: 15px !important;
+  font-weight: 600;
+}
+

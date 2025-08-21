@@ -46,8 +46,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell class="pm-actions-th" *matHeaderCellDef>Acciones</th>
             <td mat-cell class="pm-actions-td" *matCellDef="let p">
-              <button mat-icon-button (click)="openEdit(p)" aria-label="Editar"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn" (click)="handleDelete(p.id)" aria-label="Eliminar"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button matTooltip="Editar" (click)="openEdit(p)" >
+                <mat-icon>edit</mat-icon></button>
+              <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="handleDelete(p)" >
+                <mat-icon>delete</mat-icon></button>
             </td>
           </ng-container>
 

@@ -3,6 +3,7 @@ import { provideRouter }                                                        
 import { provideHttpClient, withInterceptors }                                  from '@angular/common/http';
 import { authInterceptor }                                                      from './auth.interceptor';
 import { routes }                                                               from './app.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // NgRx clásicos
 import { StoreModule }            from '@ngrx/store';
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
         maxAge: 25,
         logOnly: false
       })
-    )
+    ),
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 };
