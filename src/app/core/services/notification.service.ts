@@ -13,8 +13,22 @@ export class NotificationService {
   warn(message: string, action?: SnackAction)    { this.open(message, 'warn-snack', action); }
   error(message: string, action?: SnackAction)   { this.open(message, 'error-snack', action); }
 
-  private open(message: string, panelClass: string, action?: SnackAction) {
-    const ref = this.snack.open(message, action?.label ?? 'OK', { panelClass });
+   /** Helpers con botón de Deshacer */
+  successWithUndo(message: string, undo: () => void, label = 'Deshacer', duration = 5000) {
+    this.success(message, { label, onClick: undo });
+  }
+  infoWithUndo(message: string, undo: () => void, label = 'Deshacer') {
+    this.info(message, { label, onClick: undo });
+  }
+  warnWithUndo(message: string, undo: () => void, label = 'Deshacer') {
+    this.warn(message, { label, onClick: undo });
+  }
+
+  private open(message: string, panelClass: string | string[], action?: SnackAction) {
+    const classes = Array.isArray(panelClass) ? panelClass : [panelClass];
+    const ref = this.snack.open(message, action?.label ?? 'OK', {
+      panelClass: ['pm-snack-glass', ...classes]
+    });
     if (action?.onClick) ref.onAction().subscribe(() => action.onClick!());
   }
 }

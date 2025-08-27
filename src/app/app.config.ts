@@ -4,6 +4,8 @@ import { provideHttpClient, withInterceptors }                                  
 import { authInterceptor }                                                      from './auth.interceptor';
 import { routes }                                                               from './app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // NgRx clásicos
 import { StoreModule }            from '@ngrx/store';
@@ -31,8 +33,12 @@ export const appConfig: ApplicationConfig = {
       StoreDevtoolsModule.instrument({
         maxAge: 25,
         logOnly: false
-      })
+      }),
+      MatSnackBarModule
     ),
+     provideAnimations(),
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: { duration: 3500, horizontalPosition: 'center', verticalPosition: 'bottom' } },
     importProvidersFrom(BrowserAnimationsModule)
   ]
 };

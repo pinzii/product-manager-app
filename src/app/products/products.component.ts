@@ -73,6 +73,7 @@ export class ProductsComponent implements OnInit {
   }
 
   openEdit(product: Product): void {
+    const previous: Product = { ...product};
     const ref = this.dialog.open(EditProductDialogComponent, { 
       data: product,
       width: '640px',
@@ -88,9 +89,8 @@ export class ProductsComponent implements OnInit {
       if (updated) {
         this.store.dispatch(ProductActions.updateProduct({ product: updated }));
 
-        this.notify.success(`"${updated.name}" actualizado`, {
-        label: 'Deshacer',
-        onClick: () => this.store.dispatch(ProductActions.updateProduct({ product }))
+        this.notify.infoWithUndo(`"${updated.name}" actualizado`, () => {
+          this.store.dispatch(ProductActions.updateProduct({ product: previous }));
         });
       }
     });
@@ -121,12 +121,9 @@ export class ProductsComponent implements OnInit {
     this.lastDeleted = { ...product };
 
     this.store.dispatch(ProductActions.deleteProduct({ id: product.id! }));
-
-    // snackbar con "Deshacer"
-    this.notify.warn('Producto eliminado', {
-      label: 'Deshacer',
-      onClick: () => this.undoDelete()
-    });
+    
+    // 👇 helper con botón “Deshacer”
+    this.notify.warnWithUndo(`"${product.name}" eliminado`, () => this.undoDelete());
   });
 }
 

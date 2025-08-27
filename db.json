@@ -1,19 +1,9 @@
 {
   "products": [
     {
-      "id": "6850",
-      "name": "producto C",
-      "price": 30000
-    },
-    {
-      "id": "c30e",
-      "name": "producto D",
-      "price": 40000
-    },
-    {
       "id": "55f2",
       "name": "producto E",
-      "price": 50000
+      "price": 550000
     },
     {
       "id": "d4aa",
@@ -24,6 +14,31 @@
       "id": "8644",
       "name": "producto A",
       "price": 10000
+    },
+    {
+      "id": "403d",
+      "name": "producto D",
+      "price": 40000
+    },
+    {
+      "id": "9b35",
+      "name": "producto C",
+      "price": 30000
+    },
+    {
+      "id": "0f20",
+      "name": "producto F",
+      "price": 500
+    },
+    {
+      "id": "f9af",
+      "name": "producto G",
+      "price": 100100
+    },
+    {
+      "id": "1caa",
+      "name": "producto H",
+      "price": 11000111
     }
   ],
   "users": [

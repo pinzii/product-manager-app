@@ -3,9 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductActions from '../state/product.actions';
 import { ProductService } from '../products/service/product.service';
 
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Product } from '../models/product.model';
+
+import { NotificationService } from 'app/core/services/notification.service';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ProductEffects {
@@ -13,10 +15,14 @@ export class ProductEffects {
   createProduct$;
   deleteProduct$;
   updateProduct$;
-
+  createSuccessSnack$;
+  
   constructor(
     private actions$: Actions,
-    private productService: ProductService
+    private productService: ProductService,
+    private notify: NotificationService,
+    private store: Store
+
   ) {
     this.load$ = createEffect(() =>
       this.actions$.pipe(
@@ -64,10 +70,26 @@ export class ProductEffects {
           )
         )
       )
-    );
+    );    
     
-
+    
+    // ✅ Snackbar de éxito al crear (sin despachar nada)
+   this.createSuccessSnack$ = createEffect(
+      () =>
+        this.actions$.pipe(
+          ofType(ProductActions.createProductSuccess),
+          tap(({ product }) => {
+            this.notify.successWithUndo(`"${product.name}" creado`, () => {
+              if (product?.id == null) return; // por seguridad
+              this.store.dispatch(ProductActions.deleteProduct({ id: product.id }));
+              this.notify.info('Creación deshecha');
+            });
+          })
+        ),
+      { dispatch: false }
+    );
   }
+  
 }
 
 

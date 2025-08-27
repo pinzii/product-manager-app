@@ -3,15 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Product } from '../../models/product.model';
-import { NotificationService } from 'app/core/services/notification.service';
+
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private apiUrl = 'http://localhost:3000/products';
 
   constructor(
-    private http: HttpClient,
-    private notify: NotificationService
+    private http: HttpClient    
   ) {}
 
   getAll(): Observable<Product[]> {
@@ -23,15 +22,11 @@ export class ProductService {
   }
 
   create(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product).pipe(
-      tap(() => this.notify.success('Producto creado exitosamente'))
-    );
+    return this.http.post<Product>(this.apiUrl, product);
   }
 
   update(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product).pipe(
-      tap(() => this.notify.success('Producto actualizado exitosamente'))
-    );
+    return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product);
   }
 
   delete(id: string | number): Observable<void> {

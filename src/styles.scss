@@ -9,10 +9,48 @@ body {
   align-items: center;
 }
 
-.success-snack { background: #0f9d58; color: #0f9d58; }
-.info-snack    { background: #1976d2; color: #0f9d58; }
-.warn-snack    { background: #f9a825; color: #111; }
-.error-snack   { background: #d32f2f; color: #fff; }
+/* Angular Material (MDC) snackbar theming */
+.mat-mdc-snack-bar-container {
+  border-radius: 12px !important;
+}
+
+/* success */
+.mat-mdc-snack-bar-container.success-snack {
+  --mdc-snackbar-container-color: #0f9d58;  /* fondo */
+  --mdc-snackbar-supporting-text-color: #fff;  /* texto */
+  --mat-mdc-snack-bar-button-color: #fff;  /* botón OK */
+}
+
+/* info */
+.mat-mdc-snack-bar-container.info-snack {
+  --mdc-snackbar-container-color: #1976d2;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-mdc-snack-bar-button-color: #fff;
+}
+
+/* warn */
+.mat-mdc-snack-bar-container.warn-snack {
+  --mdc-snackbar-container-color: #f9a825;
+  --mdc-snackbar-supporting-text-color: #111;
+  --mat-mdc-snack-bar-button-color: #111;
+}
+
+/* error */
+.mat-mdc-snack-bar-container.error-snack {
+  --mdc-snackbar-container-color: #d32f2f;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-mdc-snack-bar-button-color: #fff;
+}
+
+/* Apariencia glass sobre el contenedor del snackbar (respeta tus colores por variables MDC) */
+.mat-mdc-snack-bar-container.pm-snack-glass {
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 32px rgba(0,0,0,.35);
+  border-radius: 14px !important;
+}
+
 
 /* ===== Panel glass y layout ===== */
 .pm-dialog-rounded .mat-mdc-dialog-surface { border-radius: 20px; }
