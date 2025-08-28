@@ -19,6 +19,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { EditProductDialogComponent } from './components/product-form/edit-product-dialog/edit-product-dialog-component';
 import { NotificationService } from 'app/core/services/notification.service';
@@ -37,7 +38,8 @@ import { NotificationService } from 'app/core/services/notification.service';
     MatIconModule,
     MatToolbarModule,
     MatCardModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
