@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, LOCALE_ID, DEFAULT_CURRENCY_CODE  } from '@angular/core';
 import { provideRouter }                                                        from '@angular/router';
 import { provideHttpClient, withInterceptors }                                  from '@angular/common/http';
 import { authInterceptor }                                                      from './auth.interceptor';
@@ -15,8 +15,15 @@ import { StoreDevtoolsModule }    from '@ngrx/store-devtools';
 import { productReducer }         from './state/product.reducer';
 import { ProductEffects }         from './state/product.effects';
 
+import { registerLocaleData} from '@angular/common';
+import localeEsCO from '@angular/common/locales/es-CO';
+
+registerLocaleData(localeEsCO);
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-CO' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'COP' },
     // 1) optimización de zonas
     provideZoneChangeDetection({ eventCoalescing: true }),
 

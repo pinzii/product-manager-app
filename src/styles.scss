@@ -174,3 +174,92 @@ body {
   font-weight: 600;
 }
 
+/* ===== Cards glass (crear y listado) ===== */
+.pm-card-glass.mat-mdc-card {
+  background: rgba(22, 24, 33, 0.28);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  border-radius: 18px;
+}
+
+/* ===== Tabla sobre glass ===== */
+.pm-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.pm-table thead .mat-mdc-header-cell {
+  font-weight: 600;
+  opacity: .95;
+  background: rgba(255,255,255,.06); /* leve glass en header */
+  backdrop-filter: blur(4px);
+}
+
+.pm-table .mat-mdc-row:hover {
+  background: rgba(255,255,255,.06);
+}
+
+/* Botonera de acciones más juntita */
+.pm-actions-td button + button { 
+  margin-left: 4px; 
+}
+
+/* (opcional) ancho del campo de búsqueda si lo usas */
+.pm-filter-field {
+  width: 280px; 
+}
+
+/* Toolbar transparente (si la usas dentro de la card) */
+.pm-toolbar { 
+background: transparent !important; 
+}
+
+.pm-actions-th, .pm-actions-td { text-align: right; }
+.pm-actions-td button + button { margin-left: 4px; }
+
+.pm-table thead .mat-mdc-header-cell {
+  font-weight: 600;
+  opacity: .95;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(4px);
+}
+.pm-table .mat-mdc-row:hover { background: rgba(255,255,255,.06); }
+
+.pm-table .mat-mdc-header-row {
+  position: sticky; top: 0; z-index: 1;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(4px);
+}
+
+.pm-table .mat-mdc-row:nth-child(even) { background: rgba(255,255,255,.03); }
+.pm-table .mat-mdc-row:hover { background: rgba(255,255,255,.06); }
+
+.pm-card-glass.mat-mdc-card .mat-mdc-card-content { padding: 16px 20px 20px; }
+
+/* Hover para filas de la tabla */
+.pm-table .mat-mdc-row {
+  transition: background-color .18s ease, box-shadow .18s ease;
+}
+
+.pm-table .mat-mdc-row:hover {
+  /* tono sutil compatible con el tema glass */
+  background: rgba(124, 77, 255, 0.271); /* morado suave */
+}
+
+/* (opcional) tono distinto si el SO está en tema claro */
+@media (prefers-color-scheme: light) {
+  .pm-table .mat-mdc-row:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* (opcional) una franja de acento en el borde izquierdo al hacer hover */
+.pm-table .mat-mdc-row:hover td:first-child {
+  box-shadow: inset 3px 0 0 0 rgb(89, 29, 254);
+}
+
+
+

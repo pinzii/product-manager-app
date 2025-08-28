@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }      from '@angular/common';
-import { Store, select }     from '@ngrx/store';
-import { Observable }        from 'rxjs';
-import * as ProductActions   from '../state/product.actions';
-import { Product }           from '../models/product.model';
+import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as ProductActions from '../state/product.actions';
+import { Product } from '../models/product.model';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ProductService } from './service/product.service';
@@ -43,13 +43,11 @@ import { NotificationService } from 'app/core/services/notification.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  // Observable ligado al state
   products$: Observable<Product[]>;
   displayedColumns = ['id', 'name', 'price', 'actions'];
   private lastDeleted?: Product;
 
   constructor(
-    // Inyectamos el Store de NgRx
     private store: Store<{ products: { products: Product[]; error: any } }>,
     private auth: AuthService,
     private router: Router,
@@ -57,14 +55,10 @@ export class ProductsComponent implements OnInit {
     private notify: NotificationService,
     private productsSvc: ProductService
   ) {
-    // Seleccionamos la lista de products del store
     this.products$ = this.store.select(s => s.products.products);
   }
 
   ngOnInit(): void {
-
-    this.store.subscribe(state => console.log('STATE ROOT:', state));
-    // Despachamos la acción para que el Effect cargue los productos
     this.store.dispatch(ProductActions.loadProducts());
   }
 
@@ -73,8 +67,8 @@ export class ProductsComponent implements OnInit {
   }
 
   openEdit(product: Product): void {
-    const previous: Product = { ...product};
-    const ref = this.dialog.open(EditProductDialogComponent, { 
+    const previous: Product = { ...product };
+    const ref = this.dialog.open(EditProductDialogComponent, {
       data: product,
       width: '640px',
       maxWidth: '95vw',
@@ -83,58 +77,50 @@ export class ProductsComponent implements OnInit {
       enterAnimationDuration: '150ms',
       exitAnimationDuration: '120ms',
       panelClass: ['pm-dialog-glass', 'pm-dialog-rounded']
-
     });
-    ref.afterClosed().subscribe((updated: Product | undefined) => {
-      if (updated) {
-        this.store.dispatch(ProductActions.updateProduct({ product: updated }));
 
-        this.notify.infoWithUndo(`"${updated.name}" actualizado`, () => {
-          this.store.dispatch(ProductActions.updateProduct({ product: previous }));
-        });
-      }
+    ref.afterClosed().subscribe((updated?: Product) => {
+      if (!updated) return;
+      this.store.dispatch(ProductActions.updateProduct({ product: updated }));
+      this.notify.infoWithUndo(`"${updated.name}" actualizado`, () => {
+        this.store.dispatch(ProductActions.updateProduct({ product: previous }));
+      });
     });
   }
 
   handleDelete(product: Product): void {
-  const ref = this.dialog.open(ConfirmDialogComponent, {
-    data: {
-      title: 'Eliminar producto',
-      // Puedes resaltar el nombre con <strong>
-      message: `¿Seguro desea eliminar <strong>"${product.name}"</strong>? `,
-      confirmText: 'Eliminar',
-      cancelText: 'Cancelar'
-    },
-    width: '480px',
-    maxWidth: '95vw',
-    autoFocus: false,
-    restoreFocus: true,
-    enterAnimationDuration: '140ms',
-    exitAnimationDuration: '120ms',
-    panelClass: ['pm-dialog-glass', 'pm-dialog-rounded']   // 👈 igual que el de editar
-  });
+    const ref = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Eliminar producto',
+        message: `¿Seguro desea eliminar <strong>"${product.name}"</strong>? `,
+        confirmText: 'Eliminar',
+        cancelText: 'Cancelar'
+      },
+      width: '480px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      restoreFocus: true,
+      enterAnimationDuration: '140ms',
+      exitAnimationDuration: '120ms',
+      panelClass: ['pm-dialog-glass', 'pm-dialog-rounded']
+    });
 
-  ref.afterClosed().subscribe((ok: boolean) => {
-    if (ok !== true) return;
-
-    // guarda para "Deshacer"
-    this.lastDeleted = { ...product };
-
-    this.store.dispatch(ProductActions.deleteProduct({ id: product.id! }));
-    
-    // 👇 helper con botón “Deshacer”
-    this.notify.warnWithUndo(`"${product.name}" eliminado`, () => this.undoDelete());
-  });
-}
+    ref.afterClosed().subscribe((ok: boolean) => {
+      if (ok !== true) return;
+      this.lastDeleted = { ...product };
+      this.store.dispatch(ProductActions.deleteProduct({ id: product.id! }));
+      this.notify.warnWithUndo(`"${product.name}" eliminado`, () => this.undoDelete());
+    });
+  }
 
   private undoDelete(): void {
     if (!this.lastDeleted) return;
     const { id, ...rest } = this.lastDeleted as any;
-   
+
     this.productsSvc.create(rest as Product).subscribe({
       next: () => {
-        this.notify.success('Producto restaurado');
-        this.store.dispatch(ProductActions.loadProducts()); // refresca lista
+        this.notify.success('Creación deshecha');
+        this.store.dispatch(ProductActions.loadProducts());
         this.lastDeleted = undefined;
       }
     });
@@ -146,5 +132,4 @@ export class ProductsComponent implements OnInit {
   }
 
   trackById = (_: number, p: Product) => String(p.id);
-
 }

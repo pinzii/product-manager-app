@@ -3,7 +3,7 @@
     {
       "id": "55f2",
       "name": "producto E",
-      "price": 550000
+      "price": 5500
     },
     {
       "id": "d4aa",
@@ -33,12 +33,7 @@
     {
       "id": "f9af",
       "name": "producto G",
-      "price": 100100
-    },
-    {
-      "id": "1caa",
-      "name": "producto H",
-      "price": 11000111
+      "price": 100
     }
   ],
   "users": [
