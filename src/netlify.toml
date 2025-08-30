@@ -1,0 +1,9 @@
+[build]
+  command = "npm ci && npm run build"
+  publish = "dist/product-manager-app/browser"
+
+# Redirección para SPA (Angular routing)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
