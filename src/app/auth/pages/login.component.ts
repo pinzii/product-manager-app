@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -18,6 +21,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule
+    
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -25,7 +29,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  loading = false;
+  errorMsg = "";
+
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -33,10 +40,25 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log('Login successful', this.loginForm.value);      
-    } else {
+    if (this.loginForm.invalid || this.loading) {
       this.loginForm.markAllAsTouched();
+      return;
     }
+
+    this.loading = true;
+    this.errorMsg = '';
+
+    const { email, password } = this.loginForm.value as { email: string; password: string };
+
+    this.auth.login(email, password).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/products']); // redirige tras login
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMsg = err?.message ?? 'Error de autenticación';
+      }
+    });
   }
 }

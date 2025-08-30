@@ -1,0 +1,70 @@
+<mat-toolbar class="pm-toolbar glass">
+  <span class="pm-title">Gestión de productos</span>
+  <span class="pm-spacer"></span>
+  <button mat-stroked-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Cerrar sesión
+  </button>
+</mat-toolbar>
+
+<div class="pm-shell">
+  <div class="pm-grid">
+    <mat-card class="pm-card pm-card-glass">
+      <mat-card-title>Crear producto</mat-card-title>
+      <mat-card-content>
+        <app-product-form (submitProduct)="handleCreate($event)"></app-product-form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="pm-card pm-card-glass">
+      <mat-card-title>Listado</mat-card-title>
+      <mat-card-content>
+        <table mat-table
+            *ngIf="products$ | async as list; else loading"
+            [dataSource]="list"
+            class="pm-table">
+
+          <!-- ID -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let p">{{ p.id }}</td>
+          </ng-container>
+
+          <!-- Nombre -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let p">{{ p.name }}</td>
+          </ng-container>
+
+          <!-- Precio -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let p">{{ p.price | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+          </ng-container>
+
+          <!-- Acciones -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell class="pm-actions-th" *matHeaderCellDef>Acciones</th>
+            <td mat-cell class="pm-actions-td" *matCellDef="let p">
+              <button mat-icon-button matTooltip="Editar" (click)="openEdit(p)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="handleDelete(p)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <ng-template #loading>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

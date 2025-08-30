@@ -1,0 +1,18 @@
+.pm-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  margin: 0 0 .25rem;
+  padding-top: 20px;
+}
+.pm-title-left { display: flex; align-items: center; gap: .3rem; }
+.pm-title-icon { opacity: 1; }
+
+.pm-message { padding-top: 4px; padding-left: 120px; }
+.pm-message p { margin: 0; opacity: .5; color: rgba(0, 255, 255, 0.667); }
+
+.pm-actions { padding-top: 10px; position: sticky; bottom: 0; background: transparent; }
+
+/* resaltar el nombre del producto dentro del mensaje */
+.pm-message strong { color: #ff8a80; font-weight: 700; }

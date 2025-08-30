@@ -1,0 +1,45 @@
+<h2 mat-dialog-title class="pm-title">
+  <div class="pm-title-left">
+    <mat-icon class="pm-title-icon">edit</mat-icon>
+    <span>Editar producto</span>
+  </div>
+  <div class="pm-title-right">
+    <span class="pm-id-pill">ID: {{ data.id }}</span>
+  </div>
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div mat-dialog-content class="pm-content">
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" maxlength="60" autocomplete="off" cdkFocusInitial />
+      <mat-hint align="end">{{ form.get('name')?.value?.length || 0 }}/60</mat-hint>
+      <mat-error *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+    </mat-form-field>
+
+    <!-- Precio -->
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Precio</mat-label>
+      <span matPrefix class="pm-prefix" >$</span>
+      <input
+       matInput type="number" 
+       inputmode="decimal"
+       min="0" 
+       step="100" 
+       formControlName="price" />
+      <span matSuffix class="pm-suffix">COP</span>
+      <mat-error *ngIf="form.get('price')?.hasError('required')">El precio es obligatorio</mat-error>
+      <mat-error *ngIf="form.get('price')?.hasError('min')">Debe ser ≥ 0</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end" class="pm-actions">
+    <button mat-button type="button" [mat-dialog-close]="false">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || form.pristine">
+      <mat-icon>check</mat-icon>
+      Guardar
+    </button>
+  </div>
+</form>
