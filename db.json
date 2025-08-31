@@ -1,11 +1,6 @@
 {
   "products": [
     {
-      "id": "55f2",
-      "name": "producto E",
-      "price": 5500
-    },
-    {
       "id": "d4aa",
       "name": "producto B",
       "price": 20000

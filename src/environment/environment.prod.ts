@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3000/products'
+  apiUrl: 'https://product-manager-app-cn6n.onrender.com'
 };
